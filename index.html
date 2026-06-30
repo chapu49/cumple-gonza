@@ -348,11 +348,6 @@ body{
       <button type="button" class="no" id="bNo">No puedo 😢</button>
     </div>
 
-    <div id="acompWrap">
-      <label for="acomp">Acompañantes (0 si vas solo/a)</label>
-      <input type="number" id="acomp" min="0" max="10" value="0">
-    </div>
-
     <button class="send" id="send">CONFIRMAR ASISTENCIA</button>
     <div class="msg" id="msg"></div>
   </div>
@@ -447,21 +442,18 @@ if(LUGAR && LUGAR.trim()) document.getElementById('lugar').textContent=LUGAR;
 // Elección sí/no
 var asiste='si';
 var bSi=document.getElementById('bSi'), bNo=document.getElementById('bNo');
-var acompWrap=document.getElementById('acompWrap');
-bSi.onclick=function(){asiste='si';bSi.classList.add('on');bNo.classList.remove('on');acompWrap.style.display='block';};
-bNo.onclick=function(){asiste='no';bNo.classList.add('on');bSi.classList.remove('on');acompWrap.style.display='none';};
+bSi.onclick=function(){asiste='si';bSi.classList.add('on');bNo.classList.remove('on');};
+bNo.onclick=function(){asiste='no';bNo.classList.add('on');bSi.classList.remove('on');};
 
 // Enviar
 var send=document.getElementById('send'), msg=document.getElementById('msg');
 send.onclick=function(){
   var nombre=document.getElementById('nombre').value.trim();
-  var acomp=parseInt(document.getElementById('acomp').value)||0;
   if(nombre.length<2){msg.style.color='#b94a1e';msg.textContent='Poné tu nombre, viajero ⚡';return;}
-  if(acomp<0)acomp=0; if(acomp>10)acomp=10;
 
   send.disabled=true; msg.style.color='#234a42'; msg.textContent='Acelerando a 88 mph...';
 
-  var datos={nombre:nombre,asiste:asiste,acomp:(asiste==='si'?acomp:0),fecha:new Date().toLocaleString('es-AR')};
+  var datos={nombre:nombre,asiste:asiste,acomp:0,fecha:new Date().toLocaleString('es-AR')};
 
   function exito(){
     document.getElementById('rsvpBox').style.display='none';
